@@ -1,4 +1,4 @@
-package com.uco.stloan.domain.articulo;
+package com.uco.stloan.model.articulo;
 
 import lombok.Getter;
 import lombok.Setter;

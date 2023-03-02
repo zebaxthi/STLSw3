@@ -1,43 +1,74 @@
 package com.uco.stloan.controller.persona;
 
-import com.uco.stloan.domain.persona.Persona;
+import com.uco.stloan.Services.Persona.PersonaService;
+import com.uco.stloan.model.persona.Persona;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/rest")
+@RequestMapping("/api/v1/rest/personas")
 public class PersonaController {
-    /*@Autowired
-    private BookService bookService;*/
+    @Autowired
+    private PersonaService personaService;
 
-    @GetMapping("/persona")
-    public Flux<Persona> get() {
-
-        return null;/*bookService.get();*/
+    @GetMapping
+    public  ResponseEntity<?> listaPersonas() {
+        List<Persona> personas = personaService.findAll();
+        return new ResponseEntity<>(personas, HttpStatus.OK);
     }
 
-    @PostMapping("/personas")
-    public Mono<Persona> create( @Valid @RequestBody Persona persona) {
-        return null;/*bookService.save(book);*/
+    @PostMapping
+    public ResponseEntity<Persona> create( @Valid @RequestBody Persona persona) {
+        return new ResponseEntity<>(personaService.save(persona), HttpStatus.OK);
     }
 
-    @DeleteMapping("/personas")
-    public Mono<ResponseEntity<Void>> delete ( @RequestParam(required = true) String idPersona){
-
-        return null; /*bookService.delete(idBook).then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK)))
-                .defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));*/
-
+    @DeleteMapping
+    public void delete ( @RequestParam(required = true) String idPersona){
+     personaService.deleteById (idPersona);
     }
 
-    @PutMapping("/persona")
-    public Mono<Persona> edit(@Valid @RequestBody Persona persona,
+    @PutMapping
+    public ResponseEntity<Persona> edit(@Valid @RequestBody Persona persona,
                               @RequestParam(required = true) String idPersona ){
-        return null;
+
+        Persona personaDB = null;
+        Persona personCurrent;
+
+        personaDB = personaService.findById(idPersona);
+        if(personaDB == null){
+            return new ResponseEntity<>(personaService.findById(idPersona), HttpStatus.BAD_REQUEST);
+        }
+        personCurrent = new Persona(persona.getIdentificacion(),
+                persona.getNombre(),persona.getApellido(),
+                persona.getEmail(),persona.getContraseña(),
+                persona.getCelular(),persona.getDireccion(),
+        persona.getRol(),persona.getCodigoRFID());
+
+        //empleadoDB.setNombre(empleadoCurrent.getNombre());
+        personaDB.setIdentificacion(personCurrent.getIdentificacion());
+        personaDB.setNombre(personCurrent.getNombre());
+        personaDB.setApellido(personCurrent.getApellido());
+        personaDB.setEmail(personCurrent.getEmail());
+        personaDB.setContraseña(personCurrent.getContraseña());
+        personaDB.setCelular(personCurrent.getCelular());
+        personaDB.setDireccion(personCurrent.getDireccion());
+        personaDB.setRol(personCurrent.getRol());
+        personaDB.setCodigoRFID(personCurrent.getCodigoRFID());
+
+
+
+
+        personaDB = personaService.save(personaDB);
+        return new ResponseEntity<>(persona, HttpStatus.CREATED);
     }
+
 
 }

@@ -1,8 +1,7 @@
-package com.uco.stloan.domain.persona;
+package com.uco.stloan.model.persona;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.Entity;
 
@@ -21,6 +20,10 @@ public class Persona {
     private String direccion;
     private String rol;
     private String codigoRFID;
+
+
+    public Persona ( ) {
+    }
 
     public Persona ( String identificacion, String nombre, String apellido, String email, String contraseña, String celular, String direccion, String rol, String codigoRFID ) {
         this.identificacion = identificacion;
