@@ -4,7 +4,6 @@ import com.uco.stloan.model.articulo.Articulo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class ArticulosImpl implements ArticuloServices {
     @Override
