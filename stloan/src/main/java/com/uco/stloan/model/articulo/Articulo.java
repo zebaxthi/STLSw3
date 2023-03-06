@@ -15,7 +15,11 @@ public class Articulo {
     private String nombre;
     private int cantidad;
 
-    public Articulo ( String ref, String nombre, int cantidad ) {
+    public Articulo() {
+
+    }
+
+    public Articulo (String ref, String nombre, int cantidad ) {
         this.ref = ref;
         this.nombre = nombre;
         this.cantidad = cantidad;
