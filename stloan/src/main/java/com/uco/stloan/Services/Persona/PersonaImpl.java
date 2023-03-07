@@ -13,8 +13,11 @@ import java.util.Optional;
 @Service
 public class PersonaImpl implements PersonaService {
 
+    private final  PersonaRepositorio personaRepository;
     @Autowired
-    PersonaRepositorio personaRepository;
+    public PersonaImpl(PersonaRepositorio personaRepository) {
+        this.personaRepository = personaRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -42,7 +45,7 @@ public class PersonaImpl implements PersonaService {
 
     @Override
     public boolean partialUpdate(int id, String key, String value) throws NotFoundEx {
-        Optional<Persona> optional = personaRepository.findById(String.valueOf(id));
+        Optional<Persona> optional = personaRepository.findById((long) id);
         if (optional.isPresent()) {
             Persona persona = optional.get();
 

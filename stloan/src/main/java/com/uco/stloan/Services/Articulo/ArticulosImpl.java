@@ -1,7 +1,6 @@
 package com.uco.stloan.Services.Articulo;
 
 import com.uco.stloan.Repository.Articulo.ArticuloRepositorio;
-import com.uco.stloan.Repository.Articulo.ArticuloRepository;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.model.articulo.Articulo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,11 @@ import java.util.Optional;
 @Service
 public class ArticulosImpl implements ArticuloServices {
 
+    private final ArticuloRepositorio articuloRepository;
     @Autowired
-    ArticuloRepositorio articuloRepository;
+    public ArticulosImpl(ArticuloRepositorio articuloRepository) {
+        this.articuloRepository = articuloRepository;
+    }
 
     @Override
     public List<Articulo> findAll ( ) {
