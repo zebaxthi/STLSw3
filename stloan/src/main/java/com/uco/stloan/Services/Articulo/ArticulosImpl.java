@@ -25,7 +25,7 @@ public class ArticulosImpl implements ArticuloServices {
 
     @Override
     public Articulo findById ( String ref ) {
-        return articuloRepository.findByRef(ref);
+        return null; //articuloRepository.findByRef(ref);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ArticulosImpl implements ArticuloServices {
 
     @Override
     public void deleteById ( String ref ) {
-        articuloRepository.deleteByRef(ref);
+        //articuloRepository.deleteByRef(ref);
     }
 
     @Override

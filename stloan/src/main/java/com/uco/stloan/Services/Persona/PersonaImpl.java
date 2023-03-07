@@ -28,7 +28,7 @@ public class PersonaImpl implements PersonaService {
     @Override
     @Transactional(readOnly = true)
     public Persona findById ( String identificacion ) {
-        return personaRepository.findByIdentification(identificacion);
+        return null; //personaRepository.findByIdentification(identificacion);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PersonaImpl implements PersonaService {
     @Override
     @Transactional
     public void deleteById ( String identificacion ) {
-        personaRepository.deleteByIdentification(identificacion);
+        //personaRepository.deleteByIdentification(identificacion);
     }
 
     @Override

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonaRepositorio extends JpaRepository<Persona, Long> {
-    @Query(value = "SELECT * FROM persona WHERE identificacion =:identificacion ", nativeQuery = true)
-    Persona findByIdentification(@Param("identificacion") String identificacion);
+   /* @Query(value = "SELECT * FROM PEAPLE WHERE identificacion=? ", nativeQuery = true)
+    Persona findByIdentification(String identificacion);
 
-    @Query(value = "DELETE FROM persona WHERE identificacion=?;", nativeQuery = true)
-    void deleteByIdentification(String identificacion);
+    @Query(value = "DELETE FROM PEAPLE WHERE identificacion=?;", nativeQuery = true)
+    void deleteByIdentification(String identificacion);*/
 }
