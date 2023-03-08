@@ -1,8 +1,8 @@
 package com.uco.stloan.Services.Persona;
 
-import com.uco.stloan.Repository.Persona.PersonaRepositorio;
+import com.uco.stloan.Repository.Person.PersonRepository;
 import com.uco.stloan.exception.NotFoundEx;
-import com.uco.stloan.model.persona.Persona;
+import com.uco.stloan.model.person.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,73 +11,73 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonaImpl implements PersonaService {
+public class PersonaImpl implements PersonService {
 
-    private final  PersonaRepositorio personaRepository;
+    private final PersonRepository personRepository;
     @Autowired
-    public PersonaImpl(PersonaRepositorio personaRepository) {
-        this.personaRepository = personaRepository;
+    public PersonaImpl(PersonRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Persona> findAll ( ) {
-        return personaRepository.findAll();
+    public List<Person> findAll ( ) {
+        return personRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Persona findById ( String identificacion ) {
-        return null; //personaRepository.findByIdentification(identificacion);
+    public Person findById (String identification ) {
+        return null; //personRepository.findByIdentification(identification);
     }
 
     @Override
     @Transactional
-    public Persona save ( Persona persona ) {
-        return personaRepository.save(persona);
+    public Person save (Person person) {
+        return personRepository.save(person);
     }
 
     @Override
     @Transactional
-    public void deleteById ( String identificacion ) {
-        //personaRepository.deleteByIdentification(identificacion);
+    public void deleteById ( String identification ) {
+        //personaRepository.deleteByIdentification(identification);
     }
 
     @Override
     public boolean partialUpdate(int id, String key, String value) throws NotFoundEx {
-        Optional<Persona> optional = personaRepository.findById((long) id);
+        Optional<Person> optional = personRepository.findById((long) id);
         if (optional.isPresent()) {
-            Persona persona = optional.get();
+            Person person = optional.get();
 
-            if (key.equalsIgnoreCase("identificacion")) {
-                persona.setIdentificacion(value);
+            if (key.equalsIgnoreCase("identification")) {
+                person.setIdentification(value);
             }
-            if (key.equalsIgnoreCase("nombre")) {
-                persona.setNombre(value);
+            if (key.equalsIgnoreCase("name")) {
+                person.setName(value);
             }
-            if (key.equalsIgnoreCase("apellido")) {
-                persona.setApellido(value);
+            if (key.equalsIgnoreCase("lastname")) {
+                person.setLastname(value);
             }
             if (key.equalsIgnoreCase("email")) {
-                persona.setEmail(value);
+                person.setEmail(value);
             }
-            if (key.equalsIgnoreCase("contraseña")) {
-                persona.setContraseña(value);
+            if (key.equalsIgnoreCase("password")) {
+                person.setPassword(value);
             }
-            if (key.equalsIgnoreCase("celular")) {
-                persona.setCelular(value);
+            if (key.equalsIgnoreCase("cellular")) {
+                person.setCellular(value);
             }
-            if (key.equalsIgnoreCase("direccion")) {
-                persona.setDireccion(value);
+            if (key.equalsIgnoreCase("address")) {
+                person.setAddress(value);
             }
             if (key.equalsIgnoreCase("rol")) {
-                persona.setRol(value);
+                person.setRol(value);
             }
-            if (key.equalsIgnoreCase("codigoRFID")) {
-                persona.setCodigoRFID(value);
+            if (key.equalsIgnoreCase("codeRFID")) {
+                person.setCodeRFID(value);
             }
 
-            personaRepository.save(persona);
+            personRepository.save(person);
             return true;
         } else {
             throw new NotFoundEx("RESOURCE_NOT_FOUND");

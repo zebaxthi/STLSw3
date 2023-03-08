@@ -1,4 +1,4 @@
-package com.uco.stloan.model.articulo;
+package com.uco.stloan.model.article;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name="ARTICLES")
-public class Articulo {
+public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,21 +18,21 @@ public class Articulo {
     @Column(name = "ref")
     private String ref;
     @Column(name = "nombre")
-    private String nombre;
+    private String name;
     @Column(name = "cantidad")
-    private int cantidad;
+    private int quantity;
 
     // estados : A: ACTIVO , I: INACTIVO
     @Column(name = "estado")
-    private  String estado;
+    private  String condition;
 
-    public Articulo() {
+    public Article() {
 
     }
 
-    public Articulo (String ref, String nombre, int cantidad ) {
+    public Article(String ref, String name, int condition ) {
         this.ref = ref;
-        this.nombre = nombre;
-        this.cantidad = cantidad;
+        this.name = name;
+        this.quantity = condition;
     }
 }

@@ -1,12 +1,12 @@
-package com.uco.stloan.controller.articulo;
+package com.uco.stloan.controller.article;
 
 
-import com.uco.stloan.Services.Articulo.ArticuloServices;
+
+import com.uco.stloan.Services.Articucle.ArticleServices;
 import com.uco.stloan.dto.PatchDto;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
-import com.uco.stloan.model.articulo.Articulo;
-import com.uco.stloan.model.persona.Persona;
+import com.uco.stloan.model.article.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +17,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/rest/articulos")
-public class ArticuloController {
+public class ArticleController {
 
     @Autowired
-    private ArticuloServices articleService;
+    private ArticleServices articleService;
 
     @GetMapping
     public ResponseEntity<?> listArticles() {
-        List<Articulo> articles = articleService.findAll();
+        List<Article> articles = articleService.findAll();
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Articulo> create( @Valid @RequestBody Articulo articles) {
+    public ResponseEntity<Article> create(@Valid @RequestBody Article articles) {
         return new ResponseEntity<>(articleService.save(articles), HttpStatus.OK);
     }
 
@@ -39,19 +39,19 @@ public class ArticuloController {
     }
 
     @PutMapping
-    public ResponseEntity<Articulo> edit(@Valid @RequestBody Articulo article,
+    public ResponseEntity<Article> edit(@Valid @RequestBody Article article,
                                         @RequestParam(required = true) String ref ){
 
-        Articulo articleDB = null;
-        Articulo articleCurrent;
+        Article articleDB = null;
+        Article articleCurrent;
 
         articleDB = articleService.findById(ref);
         if(articleDB == null){
             return new ResponseEntity<>(articleService.findById(ref), HttpStatus.BAD_REQUEST);
         }
-        articleCurrent = new Articulo(article.getRef(),article.getNombre(),article.getCantidad());
+        articleCurrent = new Article(article.getRef(),article.getNombre(),article.getCantidad());
 
-        //empleadoDB.setNombre(empleadoCurrent.getNombre());
+
         articleDB.setId(articleCurrent.getId());
         articleDB.setNombre(articleCurrent.getNombre());
         articleDB.setCantidad(articleCurrent.getCantidad());

@@ -1,14 +1,11 @@
-package com.uco.stloan.Repository.Persona;
+package com.uco.stloan.Repository.Person;
 
-import com.uco.stloan.model.articulo.Articulo;
-import com.uco.stloan.model.persona.Persona;
+import com.uco.stloan.model.person.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PersonaRepositorio extends JpaRepository<Persona, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
    /* @Query(value = "SELECT * FROM PEAPLE WHERE identificacion=? ", nativeQuery = true)
     Persona findByIdentification(String identificacion);
 
