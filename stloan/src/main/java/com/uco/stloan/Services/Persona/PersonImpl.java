@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonaImpl implements PersonService {
+public class PersonImpl implements PersonService {
 
     private final PersonRepository personRepository;
     @Autowired
-    public PersonaImpl(PersonRepository personRepository) {
+    public PersonImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 

@@ -49,12 +49,12 @@ public class ArticleController {
         if(articleDB == null){
             return new ResponseEntity<>(articleService.findById(ref), HttpStatus.BAD_REQUEST);
         }
-        articleCurrent = new Article(article.getRef(),article.getNombre(),article.getCantidad());
+        articleCurrent = new Article(article.getRef(),article.getName(),article.getQuantity());
 
 
         articleDB.setId(articleCurrent.getId());
-        articleDB.setNombre(articleCurrent.getNombre());
-        articleDB.setCantidad(articleCurrent.getCantidad());
+        articleDB.setName(articleCurrent.getName());
+        articleDB.setQuantity(articleCurrent.getQuantity());
 
 
 
