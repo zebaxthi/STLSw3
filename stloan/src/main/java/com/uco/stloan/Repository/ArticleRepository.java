@@ -1,11 +1,11 @@
-package com.uco.stloan.Repository.Articucle;
+package com.uco.stloan.Repository;
 
-import com.uco.stloan.model.article.Article;
+import com.uco.stloan.model.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ArticleRepository extends JpaRepository<Article,String> {
+public interface ArticleRepository extends JpaRepository<Article,Long> {
    /* @Query(value = "SELECT * FROM ARTICLES WHERE ref=?",nativeQuery = true)
     public Articulo findByRef(String ref);
 

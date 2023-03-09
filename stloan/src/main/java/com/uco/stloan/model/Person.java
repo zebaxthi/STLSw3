@@ -1,4 +1,4 @@
-package com.uco.stloan.model.person;
+package com.uco.stloan.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,49 +8,43 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name="PEAPLE")
+@Table(name="PERSONS")
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "identificacion")
+    @Column(name = "identification")
     private String identification;
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
-    @Column(name = "apellido")
+    @Column(name = "lastname")
     private String lastname;
     @Column(name = "email")
     private String email;
-    @Column(name = "contraseña")
+    @Column(name = "password")
     private String password;
-    @Column(name = "celular")
-    private String cellular;
-    @Column(name = "direccion")
+    @Column(name = "mobile")
+    private String mobile;
+    @Column(name = "address")
     private String address;
     @Column(name = "rol")
     private String rol;
-    @Column(name = "codigoRFID")
-    private String codeRFID;
-        // estados : A: ACTIVO , I: INACTIVO
-    @Column(name = "estado")
-    private  String condition;
-
-
-
+    @Column(name = "RFID")
+    private String RFID;
 
     public Person( ) {
     }
 
-    public Person(String identification, String name, String lastname, String email, String password, String cellular, String address, String rol, String codeRFID) {
+    public Person( String identification, String name, String lastname, String email, String password, String mobile, String address, String rol, String RFID ) {
         this.identification = identification;
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.cellular = cellular;
+        this.mobile = mobile;
         this.address = address;
         this.rol = rol;
-        this.codeRFID = codeRFID;
+        this.RFID = RFID;
     }
 }

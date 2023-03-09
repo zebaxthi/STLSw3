@@ -1,8 +1,8 @@
 package com.uco.stloan.Services.Articucle;
 
-import com.uco.stloan.Repository.Articucle.ArticleRepository;
+import com.uco.stloan.Repository.ArticleRepository;
 import com.uco.stloan.exception.NotFoundEx;
-import com.uco.stloan.model.article.Article;
+import com.uco.stloan.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ArticucleImpl implements ArticleServices {
+public class ArticleImpl implements ArticleServices {
 
     private final ArticleRepository articleRepository;
     @Autowired
-    public ArticucleImpl(ArticleRepository articleRepository) {
+    public ArticleImpl ( ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
     }
 
@@ -23,9 +23,10 @@ public class ArticucleImpl implements ArticleServices {
         return articleRepository.findAll();
     }
 
+
     @Override
-    public Article findById (String ref ) {
-        return null; //articuloRepository.findByRef(ref);
+    public Article findById (Long id ) {
+        return articleRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -33,14 +34,17 @@ public class ArticucleImpl implements ArticleServices {
         return articleRepository.save(article);
     }
 
+
     @Override
-    public void deleteById ( String ref ) {
-        //articuloRepository.deleteByRef(ref);
+    public void deleteById ( Long id ) {
+        articleRepository.deleteById(id);
     }
+
+
 
     @Override
     public boolean partialUpdate(long id, String key, String value) throws NotFoundEx {
-        Optional<Article> optional = articleRepository.findById(String.valueOf(id));
+        Optional<Article> optional = articleRepository.findById(id);
         if (optional.isPresent()) {
             Article article = optional.get();
 

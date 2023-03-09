@@ -1,6 +1,6 @@
-package com.uco.stloan.Repository.loan;
+package com.uco.stloan.Repository;
 
-import com.uco.stloan.model.loan.Loan;
+import com.uco.stloan.model.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.uco.stloan.Services.Persona;
 
-import com.uco.stloan.Repository.Person.PersonRepository;
+import com.uco.stloan.Repository.PersonRepository;
 import com.uco.stloan.exception.NotFoundEx;
-import com.uco.stloan.model.person.Person;
+import com.uco.stloan.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +27,8 @@ public class PersonImpl implements PersonService {
 
     @Override
     @Transactional(readOnly = true)
-    public Person findById (String identification ) {
-        return null; //personRepository.findByIdentification(identification);
+    public Person findById (Long id ) {
+        return personRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -39,13 +39,14 @@ public class PersonImpl implements PersonService {
 
     @Override
     @Transactional
-    public void deleteById ( String identification ) {
-        //personaRepository.deleteByIdentification(identification);
+    public void deleteById (Long id) {
+        personRepository.findById(id);
     }
 
+
     @Override
-    public boolean partialUpdate(int id, String key, String value) throws NotFoundEx {
-        Optional<Person> optional = personRepository.findById((long) id);
+    public boolean partialUpdate ( Long id, String key, String value ) throws NotFoundEx {
+        Optional<Person> optional = personRepository.findById(id);
         if (optional.isPresent()) {
             Person person = optional.get();
 
@@ -65,7 +66,7 @@ public class PersonImpl implements PersonService {
                 person.setPassword(value);
             }
             if (key.equalsIgnoreCase("cellular")) {
-                person.setCellular(value);
+                person.setMobile(value);
             }
             if (key.equalsIgnoreCase("address")) {
                 person.setAddress(value);
@@ -74,7 +75,7 @@ public class PersonImpl implements PersonService {
                 person.setRol(value);
             }
             if (key.equalsIgnoreCase("codeRFID")) {
-                person.setCodeRFID(value);
+                person.setRFID(value);
             }
 
             personRepository.save(person);

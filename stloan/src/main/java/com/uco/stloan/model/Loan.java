@@ -1,7 +1,5 @@
-package com.uco.stloan.model.loan;
+package com.uco.stloan.model;
 
-import com.uco.stloan.model.article.Article;
-import com.uco.stloan.model.person.Person;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "PRESTAMO")
+@Table(name = "LOANS")
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +19,12 @@ public class Loan {
     private Article article;
 
     @ManyToOne
-    @JoinColumn(name ="idPersona")
+    @JoinColumn(name ="idPerson")
     private Person person;
 
     // estados : A: ACTIVO , I: INACTIVO
-    @Column(name = "estado")
-    private  String condition;
+    @Column(name = "status")
+    private  String status;
 
 
 
@@ -34,10 +32,10 @@ public class Loan {
 
     }
 
-    public Loan(Long id, Article article, Person person, String condition) {
+    public Loan(Long id, Article article, Person person, String status ) {
         this.id = id;
         this.article = article;
         this.person = person;
-        this.condition = condition;
+        this.status = status;
     }
 }

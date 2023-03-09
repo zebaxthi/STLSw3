@@ -1,4 +1,4 @@
-package com.uco.stloan.controller.article;
+package com.uco.stloan.controller;
 
 
 
@@ -6,7 +6,7 @@ import com.uco.stloan.Services.Articucle.ArticleServices;
 import com.uco.stloan.dto.PatchDto;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
-import com.uco.stloan.model.article.Article;
+import com.uco.stloan.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,33 +34,31 @@ public class ArticleController {
     }
 
     @DeleteMapping
-    public void delete ( @RequestParam(required = true) String ref ){
-        articleService.deleteById (ref);
+    public void delete ( @RequestParam(required = true) Long id ){
+        articleService.deleteById (id);
     }
 
     @PutMapping
     public ResponseEntity<Article> edit(@Valid @RequestBody Article article,
-                                        @RequestParam(required = true) String ref ){
+                                        @RequestParam(required = true) Long id ){
 
         Article articleDB = null;
         Article articleCurrent;
 
-        articleDB = articleService.findById(ref);
+        articleDB = articleService.findById(id);
         if(articleDB == null){
-            return new ResponseEntity<>(articleService.findById(ref), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(articleService.findById(id), HttpStatus.BAD_REQUEST);
         }
         articleCurrent = new Article(article.getRef(),article.getName(),article.getQuantity());
 
-
-        articleDB.setId(articleCurrent.getId());
+        articleDB.setRef(articleCurrent.getRef());
         articleDB.setName(articleCurrent.getName());
         articleDB.setQuantity(articleCurrent.getQuantity());
-
-
+        articleDB.setStatus(articleCurrent.getStatus());
 
 
         articleDB = articleService.save(articleDB);
-        return new ResponseEntity<>(article, HttpStatus.CREATED);
+        return new ResponseEntity<>(articleDB, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")

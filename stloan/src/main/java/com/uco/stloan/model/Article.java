@@ -1,4 +1,4 @@
-package com.uco.stloan.model.article;
+package com.uco.stloan.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,22 +17,22 @@ public class Article {
 
     @Column(name = "ref")
     private String ref;
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
-    @Column(name = "cantidad")
+    @Column(name = "quantity")
     private int quantity;
 
     // estados : A: ACTIVO , I: INACTIVO
-    @Column(name = "estado")
-    private  String condition;
+    @Column(name = "status")
+    private  String status;
 
     public Article() {
 
     }
 
-    public Article(String ref, String name, int condition ) {
+    public Article(String ref, String name, int status ) {
         this.ref = ref;
         this.name = name;
-        this.quantity = condition;
+        this.quantity = status;
     }
 }
