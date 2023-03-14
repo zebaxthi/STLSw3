@@ -1,6 +1,7 @@
 package com.uco.stloan.Services.Articucle;
 
 import com.uco.stloan.Repository.ArticleRepository;
+import com.uco.stloan.dto.ArticleDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ArticleImpl implements ArticleServices {
     }
 
     @Override
-    public Article save (Article article) {
+    public Article save (@Valid ArticleDTO article) {
         return articleRepository.save(article);
     }
 

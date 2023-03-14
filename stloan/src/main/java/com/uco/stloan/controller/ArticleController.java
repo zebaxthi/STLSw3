@@ -3,7 +3,8 @@ package com.uco.stloan.controller;
 
 
 import com.uco.stloan.Services.Articucle.ArticleServices;
-import com.uco.stloan.dto.PatchDto;
+import com.uco.stloan.dto.ArticleDTO;
+import com.uco.stloan.dto.PatchDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.model.Article;
@@ -29,7 +30,7 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Article> create(@Valid @RequestBody Article articles) {
+    public ResponseEntity<Article> create(@Valid @RequestBody ArticleDTO articles) {
         return new ResponseEntity<>(articleService.save(articles), HttpStatus.OK);
     }
 
@@ -39,17 +40,17 @@ public class ArticleController {
     }
 
     @PutMapping
-    public ResponseEntity<Article> edit(@Valid @RequestBody Article article,
+    public ResponseEntity<Article> edit(@Valid @RequestBody ArticleDTO article,
                                         @RequestParam(required = true) Long id ){
 
-        Article articleDB = null;
-        Article articleCurrent;
+        ArticleDTO articleDB = null;
+        ArticleDTO articleCurrent;
 
         articleDB = articleService.findById(id);
         if(articleDB == null){
             return new ResponseEntity<>(articleService.findById(id), HttpStatus.BAD_REQUEST);
         }
-        articleCurrent = new Article(article.getRef(),article.getName(),article.getQuantity());
+        articleCurrent = new ArticleDTO(article.getRef(),article.getName(),article.getQuantity(),article.getStatus());
 
         articleDB.setRef(articleCurrent.getRef());
         articleDB.setName(articleCurrent.getName());
@@ -63,7 +64,7 @@ public class ArticleController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Boolean> updatePartially(@PathVariable(name = "id") int id,
-                                                   @RequestBody PatchDto dto) throws NotYetImplementedEx, NotFoundEx {
+                                                   @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
         // skipping validations for brevity
         if (dto.getOp().equalsIgnoreCase("update")) {
             boolean result = articleService.partialUpdate(id, dto.getKey(), dto.getValue());

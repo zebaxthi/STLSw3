@@ -1,7 +1,8 @@
 package com.uco.stloan.controller;
 
 import com.uco.stloan.Services.Persona.PersonService;
-import com.uco.stloan.dto.PatchDto;
+import com.uco.stloan.dto.PatchDTO;
+import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.model.Person;
@@ -26,7 +27,7 @@ import java.util.List;
         }
 
         @PostMapping
-        public ResponseEntity<Person> create(@Valid @RequestBody Person person) {
+        public ResponseEntity<Person> create(@Valid @RequestBody PersonDTO person) {
             return new ResponseEntity<>(personService.save(person), HttpStatus.OK);
         }
 
@@ -36,7 +37,7 @@ import java.util.List;
         }
 
         @PutMapping
-        public ResponseEntity<Person> edit(@Valid @RequestBody Person person,
+        public ResponseEntity<Person> edit(@Valid @RequestBody PersonDTO person,
                                            @RequestParam(required = true) Long id ){
 
             Person personDB = null;
@@ -72,7 +73,7 @@ import java.util.List;
 
         @PatchMapping("/{id}")
         public ResponseEntity<Boolean> updatePartially(@PathVariable(name = "id") Long id,
-                                                       @RequestBody PatchDto dto) throws NotYetImplementedEx, NotFoundEx {
+                                                       @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
             // skipping validations for brevity
             if (dto.getOp().equalsIgnoreCase("update")) {
                 boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
