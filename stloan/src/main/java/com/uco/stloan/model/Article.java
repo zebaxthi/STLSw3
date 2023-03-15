@@ -26,13 +26,14 @@ public class Article {
     @Column(name = "status")
     private  String status;
 
-    public Article() {
 
-    }
-
-    public Article(String ref, String name, int status ) {
+    public Article(String ref, String name, int quantity, String status ) {
         this.ref = ref;
         this.name = name;
-        this.quantity = status;
+        this.quantity = quantity;
+        this.status = status;
+    }
+
+    public Article() {
     }
 }

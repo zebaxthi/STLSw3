@@ -3,6 +3,7 @@ package com.uco.stloan.controller;
 
 
 import com.uco.stloan.Services.Articucle.ArticleServices;
+
 import com.uco.stloan.dto.ArticleDTO;
 import com.uco.stloan.dto.PatchDTO;
 import com.uco.stloan.exception.NotFoundEx;
@@ -30,8 +31,10 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Article> create(@Valid @RequestBody ArticleDTO articles) {
-        return new ResponseEntity<>(articleService.save(articles), HttpStatus.OK);
+    public ResponseEntity<?> create(@Valid @RequestBody ArticleDTO article) {
+
+        Article newArticle = new Article(article.getRef(),article.getName(),article.getQuantity(),article.getStatus());
+        return new ResponseEntity<>(articleService.save(newArticle), HttpStatus.CREATED);
     }
 
     @DeleteMapping
@@ -40,17 +43,17 @@ public class ArticleController {
     }
 
     @PutMapping
-    public ResponseEntity<Article> edit(@Valid @RequestBody ArticleDTO article,
+    public ResponseEntity<?> edit(@Valid @RequestBody ArticleDTO article,
                                         @RequestParam(required = true) Long id ){
 
-        ArticleDTO articleDB = null;
-        ArticleDTO articleCurrent;
+        Article articleDB = null;
+        Article articleCurrent;
 
         articleDB = articleService.findById(id);
         if(articleDB == null){
             return new ResponseEntity<>(articleService.findById(id), HttpStatus.BAD_REQUEST);
         }
-        articleCurrent = new ArticleDTO(article.getRef(),article.getName(),article.getQuantity(),article.getStatus());
+        articleCurrent = new Article(article.getRef(),article.getName(),article.getQuantity(),article.getStatus());
 
         articleDB.setRef(articleCurrent.getRef());
         articleDB.setName(articleCurrent.getName());

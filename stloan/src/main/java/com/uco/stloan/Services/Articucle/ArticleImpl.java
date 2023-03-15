@@ -7,6 +7,7 @@ import com.uco.stloan.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +32,11 @@ public class ArticleImpl implements ArticleServices {
     }
 
     @Override
-    public Article save (@Valid ArticleDTO article) {
+    public Article save(Article article) {
         return articleRepository.save(article);
     }
+
+
 
 
     @Override

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,8 +28,13 @@ import java.util.List;
         }
 
         @PostMapping
-        public ResponseEntity<Person> create(@Valid @RequestBody PersonDTO person) {
-            return new ResponseEntity<>(personService.save(person), HttpStatus.OK);
+        public ResponseEntity<?> create(@Valid @RequestBody PersonDTO person, Binding result) {
+
+            Person newPerson = new Person(person.getIdentification(),person.getName(),person.getLastname(),
+                    person.getEmail(),person.getPassword(),person.getMobile(),person.getAddress(),person.getRol(),
+                    person.getRFID());
+
+            return new ResponseEntity<>(personService.save(newPerson), HttpStatus.CREATED);
         }
 
         @DeleteMapping
@@ -37,7 +43,7 @@ import java.util.List;
         }
 
         @PutMapping
-        public ResponseEntity<Person> edit(@Valid @RequestBody PersonDTO person,
+        public ResponseEntity<Person> edit(@Valid @RequestBody Person person,
                                            @RequestParam(required = true) Long id ){
 
             Person personDB = null;
