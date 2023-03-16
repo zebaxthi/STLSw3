@@ -41,8 +41,9 @@ dependencies {
 	testImplementation 'org.mockito:mockito-all:1.10.19'
 	implementation 'org.springframework.security.oauth:spring-security-oauth2:2.5.0.RELEASE'
 	implementation 'com.auth0:java-jwt:4.2.1'
-
 	implementation 'org.modelmapper:modelmapper:3.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-security:3.0.3'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.4'
 
 }
 
