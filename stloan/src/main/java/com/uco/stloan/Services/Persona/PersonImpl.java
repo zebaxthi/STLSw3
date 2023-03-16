@@ -1,12 +1,14 @@
 package com.uco.stloan.Services.Persona;
 
 import com.uco.stloan.Repository.PersonRepository;
+import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +34,7 @@ public class PersonImpl implements PersonService {
     }
 
     @Override
-    @Transactional
-    public Person save (Person person) {
+    public Person save(Person person) {
         return personRepository.save(person);
     }
 

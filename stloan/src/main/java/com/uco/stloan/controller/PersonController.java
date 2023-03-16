@@ -1,7 +1,8 @@
 package com.uco.stloan.controller;
 
 import com.uco.stloan.Services.Persona.PersonService;
-import com.uco.stloan.dto.PatchDto;
+import com.uco.stloan.dto.PatchDTO;
+import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.model.Person;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,8 +28,13 @@ import java.util.List;
         }
 
         @PostMapping
-        public ResponseEntity<Person> create(@Valid @RequestBody Person person) {
-            return new ResponseEntity<>(personService.save(person), HttpStatus.OK);
+        public ResponseEntity<?> create(@Valid @RequestBody PersonDTO person, Binding result) {
+
+            Person newPerson = new Person(person.getIdentification(),person.getName(),person.getLastname(),
+                    person.getEmail(),person.getPassword(),person.getMobile(),person.getAddress(),person.getRol(),
+                    person.getRFID());
+
+            return new ResponseEntity<>(personService.save(newPerson), HttpStatus.CREATED);
         }
 
         @DeleteMapping
@@ -72,7 +79,7 @@ import java.util.List;
 
         @PatchMapping("/{id}")
         public ResponseEntity<Boolean> updatePartially(@PathVariable(name = "id") Long id,
-                                                       @RequestBody PatchDto dto) throws NotYetImplementedEx, NotFoundEx {
+                                                       @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
             // skipping validations for brevity
             if (dto.getOp().equalsIgnoreCase("update")) {
                 boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
