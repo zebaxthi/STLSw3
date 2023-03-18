@@ -1,13 +1,12 @@
 package com.uco.stloan.Services.Articucle;
 
 import com.uco.stloan.Repository.ArticleRepository;
-import com.uco.stloan.dto.ArticleDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 

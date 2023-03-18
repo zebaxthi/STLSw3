@@ -3,10 +3,13 @@ package com.uco.stloan.Services.Persona;
 import com.uco.stloan.Repository.PersonRepository;
 import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.NotFoundEx;
+import com.uco.stloan.exception.ResourceBadRequest;
+import com.uco.stloan.exception.ResourceNotFound;
 import com.uco.stloan.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,11 +33,16 @@ public class PersonImpl implements PersonService {
     @Override
     @Transactional(readOnly = true)
     public Person findById (Long id ) {
-        return personRepository.findById(id).orElse(null);
+        return personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("Person with id:" + id + " not found"));
     }
 
     @Override
-    public Person save(Person person) {
+    public Person save( Person person, BindingResult result) {
+        boolean emailExists = personRepository.existsByEmail(person.getEmail());
+        if(result.hasErrors()) {
+            throw new ResourceBadRequest("Person bad request", result);
+        }
         return personRepository.save(person);
     }
 

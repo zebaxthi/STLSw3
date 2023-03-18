@@ -6,9 +6,11 @@ import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.model.Person;
+import com.uco.stloan.web.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.Binding;
@@ -22,28 +24,36 @@ import java.util.List;
         private PersonService personService;
 
         @GetMapping
-        public ResponseEntity<?> listPerson() {
-            List<Person> person = personService.findAll();
-            return new ResponseEntity<>(person, HttpStatus.OK);
+        public ResponseEntity<Response> listPerson() {
+           return Response.createResponse(HttpStatus.OK, personService.findAll());
+        }
+
+        @GetMapping("/{id}")
+        public ResponseEntity<Response> personById(@PathVariable Long id) {
+            return Response.createResponse(HttpStatus.OK, personService.findById(id));
         }
 
         @PostMapping
-        public ResponseEntity<?> create(@Valid @RequestBody PersonDTO person, Binding result) {
+        public ResponseEntity<Response> create(@Valid @RequestBody PersonDTO person, BindingResult result) {
+
 
             Person newPerson = new Person(person.getIdentification(),person.getName(),person.getLastname(),
                     person.getEmail(),person.getPassword(),person.getMobile(),person.getAddress(),person.getRol(),
                     person.getRFID());
+            personService.save(newPerson, result);
+            return  Response.createResponse(HttpStatus.CREATED, personService.save(newPerson, result));
 
-            return new ResponseEntity<>(personService.save(newPerson), HttpStatus.CREATED);
         }
 
         @DeleteMapping
         public void delete ( @RequestParam(required = true) Long id){
+
             personService.deleteById (id);
         }
 
         @PutMapping
         public ResponseEntity<Person> edit(@Valid @RequestBody Person person,
+                                           BindingResult  result,
                                            @RequestParam(required = true) Long id ){
 
             Person personDB = null;
@@ -73,7 +83,7 @@ import java.util.List;
 
 
 
-            personDB = personService.save(personDB);
+            personDB = personService.save(personDB, result);
             return new ResponseEntity<>(person, HttpStatus.CREATED);
         }
 
