@@ -18,11 +18,10 @@ import java.util.Optional;
 @Service
 public class PersonImpl implements PersonService {
 
-    private final PersonRepository personRepository;
     @Autowired
-    public PersonImpl(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
+    private PersonRepository personRepository;
+
+
 
     @Override
     @Transactional(readOnly = true)
@@ -38,11 +37,8 @@ public class PersonImpl implements PersonService {
     }
 
     @Override
-    public Person save( Person person, BindingResult result) {
-        boolean emailExists = personRepository.existsByEmail(person.getEmail());
-        if(result.hasErrors()) {
-            throw new ResourceBadRequest("Person bad request", result);
-        }
+    @Transactional
+    public Person save(Person person) {
         return personRepository.save(person);
     }
 

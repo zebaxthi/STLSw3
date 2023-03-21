@@ -12,7 +12,7 @@ public interface PersonService {
 
     public List<Person> findAll();
     public Person findById(Long id);
-    public Person save( Person person, BindingResult result);
+    public Person save( Person person);
     public void deleteById(Long id);
     public boolean partialUpdate(Long id, String key, String value) throws NotFoundEx;
 

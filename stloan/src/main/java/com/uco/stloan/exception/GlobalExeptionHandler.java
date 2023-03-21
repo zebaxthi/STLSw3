@@ -43,10 +43,8 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<?> handlerDataAccessException(DataAccessException ex) {
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR,
-                "Data exception", ex.getMessage());
-        return ResponseEntityBuilder.build(err);
+    public ResponseEntity<ErrorResponse> handlerDataAccessException(DataAccessException ex) {
+        return  ErrorResponse.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Data exeption",ex.getMessage());
     }
 
     @Override
