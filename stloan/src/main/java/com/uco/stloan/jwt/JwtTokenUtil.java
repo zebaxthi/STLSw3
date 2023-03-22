@@ -1,4 +1,4 @@
-package com.uco.stloan.config;
+package com.uco.stloan.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -34,6 +34,12 @@ public class PersonImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Person findByEmail(String email) {
+        return personRepository.findByEmail(email);
+    }
+
+    @Override
     public Person save(Person person) {
         return personRepository.save(person);
     }

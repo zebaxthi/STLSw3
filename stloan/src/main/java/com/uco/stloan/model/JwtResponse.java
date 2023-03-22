@@ -1,5 +1,6 @@
 package com.uco.stloan.model;
 
+
 import java.io.Serializable;
 
 public class JwtResponse implements Serializable {
