@@ -32,7 +32,7 @@ public class ArticleController {
         return Response.createResponse(HttpStatus.OK, articleService.findAll());
     }
 
-    @GetMapping("/{id}")
+   @GetMapping("/{id}")
     public ResponseEntity<Response> articleById( @PathVariable Long id ) {
         return Response.createResponse(HttpStatus.OK, articleService.findById(id) );
     }
@@ -44,7 +44,7 @@ public class ArticleController {
         }
 
         Article newArticle = new Article(article.getRef(),article.getName(),article.getQuantity(),
-                                        article.getStatus());
+                article.getStatus());
         return Response.createResponse(HttpStatus.CREATED,articleService.save(newArticle));
     }
 

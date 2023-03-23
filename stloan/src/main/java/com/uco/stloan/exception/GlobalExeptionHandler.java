@@ -1,7 +1,6 @@
 package com.uco.stloan.exception;
 
 
-import com.uco.stloan.model.ApiError;
 import com.uco.stloan.web.ErrorResponse;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -49,15 +48,17 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException ( NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request ) {
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.NOT_FOUND,
-                "Endpoint no encontrado", ex.getMessage());
+
+        ErrorResponse err = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND,
+                "Endpoint not found", ex.getMessage());
         return ResponseEntityBuilder.build(err);
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported ( HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request  ) {
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.METHOD_NOT_ALLOWED,
-                "Metodo no soportado", ex.getMethod());
+
+        ErrorResponse err = new ErrorResponse(LocalDateTime.now(), HttpStatus.METHOD_NOT_ALLOWED,
+                "Method not supported", ex.getMessage());
         return ResponseEntityBuilder.build(err);
     }
 

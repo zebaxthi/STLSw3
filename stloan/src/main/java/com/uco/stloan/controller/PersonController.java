@@ -36,24 +36,7 @@ import javax.validation.Valid;
         return Response.createResponse(HttpStatus.OK, personService.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Response> create ( @Valid @RequestBody PersonDTO person, BindingResult result ) {
-
-
-        System.out.println(result.hasErrors());
-        if (result.hasErrors()) {
-            throw new ResourceBadRequest("Person bad request", result);
-        }
-
-        Person newPerson = new Person(person.getIdentification(), person.getName(), person.getLastname(),
-                person.getEmail(), person.getPassword(), person.getMobile(), person.getAddress(), person.getRol(),
-                person.getRFID());
-
-
-        return Response.createResponse(HttpStatus.CREATED, personService.save(newPerson));
-
-
-    }
+   
 
 
     @DeleteMapping
