@@ -26,17 +26,19 @@ import javax.validation.Valid;
     @Autowired
     private PersonService personService;
 
-    @GetMapping
-    public ResponseEntity<Response> listPerson ( ) {
-        return Response.createResponse(HttpStatus.OK, personService.findAll());
-    }
+
+   
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> personById ( @PathVariable Long id ) {
         return Response.createResponse(HttpStatus.OK, personService.findById(id));
     }
 
-   
+        @DeleteMapping
+        public void delete ( @RequestParam(required = true) Long id){
+            personService.deleteById (id);
+        }
+
 
 
     @DeleteMapping
