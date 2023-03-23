@@ -27,16 +27,6 @@ import java.util.List;
             return new ResponseEntity<>(person, HttpStatus.OK);
         }
 
-        @PostMapping
-        public ResponseEntity<?> create(@Valid @RequestBody PersonDTO person, Binding result) {
-
-            Person newPerson = new Person(person.getIdentification(),person.getName(),person.getLastname(),
-                    person.getEmail(),person.getPassword(),person.getMobile(),person.getAddress(),person.getRol(),
-                    person.getRFID());
-
-            return new ResponseEntity<>(personService.save(newPerson), HttpStatus.CREATED);
-        }
-
         @DeleteMapping
         public void delete ( @RequestParam(required = true) Long id){
             personService.deleteById (id);
