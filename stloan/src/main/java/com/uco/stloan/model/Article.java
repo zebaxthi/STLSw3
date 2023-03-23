@@ -20,14 +20,13 @@ public class Article {
     @Column(name = "name")
     private String name;
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
-    // estados : A: ACTIVO , I: INACTIVO
     @Column(name = "status")
     private  String status;
 
 
-    public Article(String ref, String name, int quantity, String status ) {
+    public Article(String ref, String name, Integer quantity, String status ) {
         this.ref = ref;
         this.name = name;
         this.quantity = quantity;

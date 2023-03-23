@@ -3,10 +3,13 @@ package com.uco.stloan.Services.Persona;
 import com.uco.stloan.Repository.PersonRepository;
 import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.NotFoundEx;
+import com.uco.stloan.exception.ResourceBadRequest;
+import com.uco.stloan.exception.ResourceNotFound;
 import com.uco.stloan.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,11 +18,10 @@ import java.util.Optional;
 @Service
 public class PersonImpl implements PersonService {
 
-    private final PersonRepository personRepository;
     @Autowired
-    public PersonImpl(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
+    private PersonRepository personRepository;
+
+
 
     @Override
     @Transactional(readOnly = true)
@@ -30,7 +32,8 @@ public class PersonImpl implements PersonService {
     @Override
     @Transactional(readOnly = true)
     public Person findById (Long id ) {
-        return personRepository.findById(id).orElse(null);
+        return personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("Person with id:" + id + " not found"));
     }
 
     @Override
@@ -38,7 +41,7 @@ public class PersonImpl implements PersonService {
     public Person findByEmail(String email) {
         return personRepository.findByEmail(email);
     }
-
+    
     @Override
     public Person save(Person person) {
         return personRepository.save(person);

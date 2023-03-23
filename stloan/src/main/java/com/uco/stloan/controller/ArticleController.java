@@ -8,33 +8,44 @@ import com.uco.stloan.dto.ArticleDTO;
 import com.uco.stloan.dto.PatchDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
+import com.uco.stloan.exception.ResourceBadRequest;
 import com.uco.stloan.model.Article;
+import com.uco.stloan.web.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/rest/articulos")
+@RequestMapping("/api/v1/rest/articles")
 public class ArticleController {
 
     @Autowired
     private ArticleServices articleService;
 
     @GetMapping
-    public ResponseEntity<?> listArticles() {
-        List<Article> articles = articleService.findAll();
-        return new ResponseEntity<>(articles, HttpStatus.OK);
+    public ResponseEntity<Response> listArticles() {
+        return Response.createResponse(HttpStatus.OK, articleService.findAll());
+    }
+
+   @GetMapping("/{id}")
+    public ResponseEntity<Response> articleById( @PathVariable Long id ) {
+        return Response.createResponse(HttpStatus.OK, articleService.findById(id) );
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody ArticleDTO article) {
+    public ResponseEntity<Response> create(@Valid @RequestBody ArticleDTO article, BindingResult result) {
+        if(result.hasErrors()){
+            throw new ResourceBadRequest("Article bad request",result);
+        }
 
-        Article newArticle = new Article(article.getRef(),article.getName(),article.getQuantity(),article.getStatus());
-        return new ResponseEntity<>(articleService.save(newArticle), HttpStatus.CREATED);
+        Article newArticle = new Article(article.getRef(),article.getName(),article.getQuantity(),
+                article.getStatus());
+        return Response.createResponse(HttpStatus.CREATED,articleService.save(newArticle));
     }
 
     @DeleteMapping
@@ -43,7 +54,8 @@ public class ArticleController {
     }
 
     @PutMapping
-    public ResponseEntity<?> edit(@Valid @RequestBody ArticleDTO article,
+    public ResponseEntity<Response> edit(@Valid @RequestBody ArticleDTO article,
+                                        BindingResult result,
                                         @RequestParam(required = true) Long id ){
 
         Article articleDB = null;
@@ -51,8 +63,9 @@ public class ArticleController {
 
         articleDB = articleService.findById(id);
         if(articleDB == null){
-            return new ResponseEntity<>(articleService.findById(id), HttpStatus.BAD_REQUEST);
+            throw new ResourceBadRequest("Article bad request", result);
         }
+
         articleCurrent = new Article(article.getRef(),article.getName(),article.getQuantity(),article.getStatus());
 
         articleDB.setRef(articleCurrent.getRef());
@@ -60,9 +73,7 @@ public class ArticleController {
         articleDB.setQuantity(articleCurrent.getQuantity());
         articleDB.setStatus(articleCurrent.getStatus());
 
-
-        articleDB = articleService.save(articleDB);
-        return new ResponseEntity<>(articleDB, HttpStatus.CREATED);
+        return Response.createResponse(HttpStatus.CREATED,articleService.save(articleDB));
     }
 
     @PatchMapping("/{id}")

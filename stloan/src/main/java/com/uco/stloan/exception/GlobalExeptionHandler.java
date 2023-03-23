@@ -1,7 +1,7 @@
 package com.uco.stloan.exception;
 
 
-import com.uco.stloan.model.ApiError;
+import com.uco.stloan.web.ErrorResponse;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,14 +21,14 @@ import java.util.Map;
 public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<?> handlerStudentNotFound( ResourceNotFound ex) {
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.NOT_FOUND,
-                "Resource Not Found", ex.getMessage());
-        return ResponseEntityBuilder.build(err);
+    public ResponseEntity<ErrorResponse> handlerStudentNotFound( ResourceNotFound ex) {
+        return ErrorResponse.createErrorResponse(HttpStatus.NOT_FOUND,
+                "Resource Not Found",
+                ex.getMessage());
     }
 
     @ExceptionHandler(ResourceBadRequest.class)
-    public ResponseEntity<?> handlerStudentBadRequest( ResourceBadRequest ex){
+    public ResponseEntity<ErrorResponse> handlerStudentBadRequest( ResourceBadRequest ex){
         Map<String, String> details = new HashMap<>();
         ex.getBindingResult().getFieldErrors()
                 .forEach(e -> {
@@ -36,30 +36,29 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
 
                 });
 
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.BAD_REQUEST
-                ,"Resource Bad Request", details);
-        return ResponseEntityBuilder.build(err);
-
+        return ErrorResponse.createErrorResponse(HttpStatus.BAD_REQUEST,
+                "Resource bad request",
+                details);
     }
 
     @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<?> handlerDataAccessException(DataAccessException ex) {
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR,
-                "Data exception", ex.getMessage());
-        return ResponseEntityBuilder.build(err);
+    public ResponseEntity<ErrorResponse> handlerDataAccessException(DataAccessException ex) {
+        return  ErrorResponse.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Data exeption",ex.getMessage());
     }
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException ( NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request ) {
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.NOT_FOUND,
-                "Endpoint no encontrado", ex.getMessage());
+
+        ErrorResponse err = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND,
+                "Endpoint not found", ex.getMessage());
         return ResponseEntityBuilder.build(err);
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported ( HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request  ) {
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.METHOD_NOT_ALLOWED,
-                "Metodo no soportado", ex.getMethod());
+
+        ErrorResponse err = new ErrorResponse(LocalDateTime.now(), HttpStatus.METHOD_NOT_ALLOWED,
+                "Method not supported", ex.getMessage());
         return ResponseEntityBuilder.build(err);
     }
 

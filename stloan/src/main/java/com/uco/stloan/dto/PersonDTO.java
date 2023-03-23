@@ -1,14 +1,13 @@
 package com.uco.stloan.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
 @Getter
 @Setter
 public class PersonDTO {
@@ -29,6 +28,7 @@ public class PersonDTO {
 
     @NotNull
     @NotBlank
+    @Email
     private String email;
 
     @NotNull

@@ -4,10 +4,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
-@Data
+
 @Getter
 @Setter
 public class ArticleDTO {
@@ -21,8 +20,8 @@ public class ArticleDTO {
     private String name;
 
     @NotNull
-    @NotBlank
-    private int quantity;
+    @PositiveOrZero
+    private Integer quantity;
 
 
     @NotNull
