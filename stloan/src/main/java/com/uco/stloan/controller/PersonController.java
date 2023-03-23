@@ -34,18 +34,10 @@ import javax.validation.Valid;
         return Response.createResponse(HttpStatus.OK, personService.findById(id));
     }
 
-        @DeleteMapping
-        public void delete ( @RequestParam(required = true) Long id){
+    @DeleteMapping
+    public void delete ( @RequestParam(required = true) Long id){
             personService.deleteById (id);
         }
-
-
-
-    @DeleteMapping
-    public void delete ( @RequestParam(required = true) Long id ) {
-
-        personService.deleteById(id);
-    }
 
     @PutMapping
     public ResponseEntity<Response> edit ( @Valid @RequestBody Person person,

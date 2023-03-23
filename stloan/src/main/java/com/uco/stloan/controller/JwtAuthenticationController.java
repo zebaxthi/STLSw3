@@ -58,7 +58,7 @@ public class JwtAuthenticationController {
 		if(personDB == null) {
 			return userDetailsService.save(person);
 		}
-		return null;
+		return userDetailsService.save(person);
 	}
 
 	private void authenticate(String username, String password) throws Exception {
