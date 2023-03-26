@@ -7,9 +7,13 @@ import lombok.Getter;
 @Getter
 public class PatchDTO {
 
-  String op;
 
-  String key;
 
-  String value;
+        String op;
+
+        String key;
+
+        String value;
+
+
 }

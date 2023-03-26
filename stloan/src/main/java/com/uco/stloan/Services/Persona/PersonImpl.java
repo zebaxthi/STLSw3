@@ -12,8 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Service
 public class PersonImpl implements PersonService {
@@ -55,9 +58,38 @@ public class PersonImpl implements PersonService {
 
 
     @Override
-    public boolean partialUpdate ( Long id, String key, String value ) throws NotFoundEx {
+    public boolean partialUpdate(Long id, String key, String value) throws NotFoundEx {
         Optional<Person> optional = personRepository.findById(id);
-        if (optional.isPresent()) {
+        if (!optional.isPresent()) {
+            throw new NotFoundEx("RESOURCE_NOT_FOUND");
+        }
+        Person person = optional.get();
+
+        Map<String, Consumer<String>> setters = new HashMap<>();
+        setters.put("identification", person::setIdentification);
+        setters.put("name", person::setName);
+        setters.put("lastname", person::setLastname);
+        setters.put("email", person::setEmail);
+        setters.put("password", person::setPassword);
+        setters.put("cellular", person::setMobile);
+        setters.put("address", person::setAddress);
+        setters.put("rol", person::setRol);
+        setters.put("codeRFID", person::setRFID);
+
+        if (!setters.containsKey(key)) {
+            throw new NotFoundEx("FIELD_NOT_FOUND");
+        }
+        setters.get(key).accept(value);
+
+        personRepository.save(person);
+        return true;
+    }
+
+   /* public boolean partialUpdate ( Long id, String key, String value ) throws NotFoundEx
+    {
+        Optional<Person> optional = personRepository.findById(id);
+        if (optional.isPresent())
+        {
             Person person = optional.get();
 
             if (key.equalsIgnoreCase("identification")) {
@@ -93,5 +125,5 @@ public class PersonImpl implements PersonService {
         } else {
             throw new NotFoundEx("RESOURCE_NOT_FOUND");
         }
-    }
+    }*/
 }
