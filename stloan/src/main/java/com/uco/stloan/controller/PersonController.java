@@ -21,13 +21,13 @@ import javax.validation.Valid;
 
 
 @RestController
-    @RequestMapping("/api/v1/rest/persons")
-    public class PersonController {
+@RequestMapping("/api/v1/rest/persons")
+public class PersonController {
     @Autowired
     private PersonService personService;
 
 
-   
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> personById ( @PathVariable Long id ) {
@@ -36,13 +36,13 @@ import javax.validation.Valid;
 
     @DeleteMapping
     public void delete ( @RequestParam(required = true) Long id){
-            personService.deleteById (id);
-        }
+        personService.deleteById (id);
+    }
 
     @PutMapping
     public ResponseEntity<Response> edit ( @Valid @RequestBody Person person,
-                                         BindingResult result,
-                                         @RequestParam(required = true) Long id ) {
+                                           BindingResult result,
+                                           @RequestParam(required = true) Long id ) {
 
         Person personDB = null;
         Person personCurrent;
@@ -73,19 +73,18 @@ import javax.validation.Valid;
 
 
 
-        @PatchMapping("/{id}")
-        public ResponseEntity<?> updatePartially(@PathVariable(name = "id") Long id,
-                                                       @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
-            // skipping validations for brevity
-            if (dto.getOp().equalsIgnoreCase("update")) {
-                boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
-                return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-            } else {
-                throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
-            }
-
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updatePartially(@PathVariable(name = "id") Long id,
+                                             @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
+        // skipping validations for brevity
+        if (dto.getOp().equalsIgnoreCase("update")) {
+            boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        } else {
+            throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
         }
 
     }
+}
 
 

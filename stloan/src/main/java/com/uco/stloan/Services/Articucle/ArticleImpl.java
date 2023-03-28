@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Service
 public class ArticleImpl implements ArticleServices {
@@ -47,6 +50,28 @@ public class ArticleImpl implements ArticleServices {
     @Override
     public boolean partialUpdate(long id, String key, String value) throws NotFoundEx {
         Optional<Article> optional = articleRepository.findById(id);
+        if (!optional.isPresent()) {
+            throw new NotFoundEx("RESOURCE_NOT_FOUND");
+        }
+        Article article = optional.get();
+
+        Map<String, Consumer<String>> setters = new HashMap<>();
+        setters.put("ref", article::setRef);
+        setters.put("name", article::setName);
+        setters.put("quantity", s -> article.setQuantity(Integer.parseInt(s)));
+
+        if (!setters.containsKey(key)) {
+            throw new NotFoundEx("FIELD_NOT_FOUND");
+        }
+        setters.get(key).accept(value);
+
+        articleRepository.save(article);
+        return true;
+    }
+
+    /*
+    public boolean partialUpdate(long id, String key, String value) throws NotFoundEx {
+        Optional<Article> optional = articleRepository.findById(id);
         if (optional.isPresent()) {
             Article article = optional.get();
 
@@ -65,5 +90,5 @@ public class ArticleImpl implements ArticleServices {
         } else {
             throw new NotFoundEx("RESOURCE_NOT_FOUND");
         }
-    }
+    }*/
 }

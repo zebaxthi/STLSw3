@@ -18,7 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/rest/articles")
@@ -32,7 +32,7 @@ public class ArticleController {
         return Response.createResponse(HttpStatus.OK, articleService.findAll());
     }
 
-   @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Response> articleById( @PathVariable Long id ) {
         return Response.createResponse(HttpStatus.OK, articleService.findById(id) );
     }
@@ -55,8 +55,8 @@ public class ArticleController {
 
     @PutMapping
     public ResponseEntity<Response> edit(@Valid @RequestBody ArticleDTO article,
-                                        BindingResult result,
-                                        @RequestParam(required = true) Long id ){
+                                         BindingResult result,
+                                         @RequestParam(required = true) Long id ){
 
         Article articleDB = null;
         Article articleCurrent;
@@ -85,8 +85,8 @@ public class ArticleController {
             return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
         } else {
             throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
-        }
     }
+}
 
 
 
