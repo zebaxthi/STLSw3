@@ -2,6 +2,9 @@ package com.uco.stloan.controller;
 
 import com.uco.stloan.Services.Persona.PersonService;
 import com.uco.stloan.Services.jwt.JwtUserDetailsService;
+import com.uco.stloan.dto.PersonDTO;
+import com.uco.stloan.exception.ResourceBadRequest;
+import com.uco.stloan.exception.ResourceNotFound;
 import com.uco.stloan.jwt.JwtTokenUtil;
 import com.uco.stloan.model.JwtRequest;
 import com.uco.stloan.model.JwtResponse;
@@ -16,6 +19,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -41,11 +45,12 @@ public class JwtAuthenticationController {
 	private PersonService personService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
+	public ResponseEntity<Response> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest, BindingResult result)
 			throws Exception {
 		try{
-			authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+			authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword(), result);
 		}catch (Exception e){
+
 			return Response.createResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
 		}
 
@@ -58,21 +63,25 @@ public class JwtAuthenticationController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<Response> saveUser(@RequestBody Person person)  {
-		Person personDB = personService.findByEmail(person.getEmail());
-		return Response.createResponse(HttpStatus.CREATED, userDetailsService.save(person));
+	public ResponseEntity<Response> saveUser(@RequestBody PersonDTO person)  {
+
+		Person newPerson = new Person(person.getIdentification(), person.getName(), person.getLastname(),
+				person.getEmail(), person.getPassword(), person.getMobile(), person.getAddress(), person.getRol(),
+				person.getRFID());
+
+		return Response.createResponse(HttpStatus.CREATED, userDetailsService.save(newPerson));
 	}
 
-	private void 	authenticate(String username, String password) throws Exception {
+	private void 	authenticate(String username, String password, BindingResult result) throws Exception {
 		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
+			throw new ResourceNotFound("USER_DISABLED");
 		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
+			throw new ResourceBadRequest("INVALID_CREDENTIALS", result);
 		}
 	}
 }
