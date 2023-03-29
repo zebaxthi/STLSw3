@@ -1,10 +1,12 @@
 package com.uco.stloan.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Getter
@@ -22,9 +24,10 @@ public class Person {
     @Column(name = "lastname")
     private String lastname;
     @Column(name = "email")
+    @Email
     private String email;
     @Column(name = "password")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Column(name = "mobile")
     private String mobile;

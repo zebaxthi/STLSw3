@@ -34,18 +34,18 @@ public class ArticleImpl implements ArticleServices {
 
     @Override
     public Article save(Article article) {
+        Article articleDB = articleRepository.findByRef(article.getRef());
+        if(articleDB != null) {
+            articleDB.setQuantity(articleDB.getQuantity() + article.getQuantity());
+            return articleRepository.save(articleDB);
+        }
         return articleRepository.save(article);
     }
-
-
-
 
     @Override
     public void deleteById ( Long id ) {
         articleRepository.deleteById(id);
     }
-
-
 
     @Override
     public boolean partialUpdate(long id, String key, String value) throws NotFoundEx {
