@@ -40,6 +40,7 @@ public class PersonController {
     }
 
     @PutMapping
+
     public ResponseEntity<Response> edit ( @Valid @RequestBody Person person,
                                            BindingResult result,
                                            @RequestParam(required = true) Long id ) {
@@ -68,20 +69,21 @@ public class PersonController {
         personDB.setRol(personCurrent.getRol());
         personDB.setRFID(personCurrent.getRFID());
 
-        return Response.createResponse(HttpStatus.CREATED, personService.save(person));
+        return Response.createResponse(HttpStatus.CREATED, personService.save(personDB));
     }
 
+        @PatchMapping("/{id}")
+        public ResponseEntity<Response> updatePartially(@PathVariable(name = "id") Long id,
+                                                       @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
+            // skipping validations for brevity
+            if (dto.getOp().equalsIgnoreCase("update")) {
+                boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
+                return Response.createResponse(HttpStatus.ACCEPTED,result);
+            } else {
+                throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
+            }
 
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Response> updatePartially(@PathVariable(name = "id") Long id,
-                                             @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
-        // skipping validations for brevity
-        if (dto.getOp().equalsIgnoreCase("update")) {
-            boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
-            return Response.createResponse(HttpStatus.ACCEPTED, result);
-        } else {
-            throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
         }
 
     }
