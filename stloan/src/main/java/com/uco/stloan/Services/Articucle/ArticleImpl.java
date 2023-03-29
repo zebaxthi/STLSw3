@@ -69,26 +69,5 @@ public class ArticleImpl implements ArticleServices {
         return true;
     }
 
-    /*
-    public boolean partialUpdate(long id, String key, String value) throws NotFoundEx {
-        Optional<Article> optional = articleRepository.findById(id);
-        if (optional.isPresent()) {
-            Article article = optional.get();
 
-            if (key.equalsIgnoreCase("ref")) {
-                article.setRef(value);
-            }
-            if (key.equalsIgnoreCase("name")) {
-                article.setName(value);
-            }
-            if (key.equalsIgnoreCase("quantity")) {
-                article.setQuantity(Integer.parseInt(value));
-            }
-
-            articleRepository.save(article);
-            return true;
-        } else {
-            throw new NotFoundEx("RESOURCE_NOT_FOUND");
-        }
-    }*/
 }

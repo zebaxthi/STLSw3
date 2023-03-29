@@ -1,10 +1,8 @@
 package com.uco.stloan.Services.Articucle;
 
-import com.uco.stloan.dto.ArticleDTO;
+
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.model.Article;
-
-import javax.validation.Valid;
 import java.util.List;
 
 public interface ArticleServices {
