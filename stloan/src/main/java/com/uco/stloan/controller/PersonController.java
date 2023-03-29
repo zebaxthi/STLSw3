@@ -72,20 +72,16 @@ public class PersonController {
         return Response.createResponse(HttpStatus.CREATED, personService.save(personDB));
     }
 
-        @PatchMapping("/{id}")
-        public ResponseEntity<Response> updatePartially(@PathVariable(name = "id") Long id,
-                                                       @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
-            // skipping validations for brevity
-            if (dto.getOp().equalsIgnoreCase("update")) {
-                boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
-                return Response.createResponse(HttpStatus.ACCEPTED,result);
-            } else {
-                throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
-            }
-
-
+    @PatchMapping("/{id}")
+    public ResponseEntity<Response> updatePartially(@PathVariable(name = "id") Long id,
+                                                   @RequestBody PatchDTO dto) throws NotYetImplementedEx, NotFoundEx {
+        // skipping validations for brevity
+        if (dto.getOp().equalsIgnoreCase("update")) {
+            boolean result = personService.partialUpdate(id, dto.getKey(), dto.getValue());
+            return Response.createResponse(HttpStatus.ACCEPTED,result);
+        } else {
+            throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
         }
-
     }
 }
 
