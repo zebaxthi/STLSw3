@@ -82,8 +82,6 @@ public class ArticleController {
         // skipping validations for brevity
         if (dto.getOp().equalsIgnoreCase("update")) {
             boolean result = articleService.partialUpdate(id, dto.getKey(), dto.getValue());
-
-
             return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
         } else {
             throw new NotYetImplementedEx("NOT_YET_IMPLEMENTED");
