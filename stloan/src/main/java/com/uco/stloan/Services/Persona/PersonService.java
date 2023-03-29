@@ -1,11 +1,9 @@
 package com.uco.stloan.Services.Persona;
 
-import com.uco.stloan.dto.PersonDTO;
+
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.model.Person;
-import org.springframework.validation.BindingResult;
 
-import javax.validation.Valid;
 import java.util.List;
 
 public interface PersonService {

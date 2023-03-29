@@ -41,6 +41,13 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
                 details);
     }
 
+    @ExceptionHandler(ResourceConflict.class)
+    public ResponseEntity<ErrorResponse> handlerStudentConflict( ResourceNotFound ex) {
+        return ErrorResponse.createErrorResponse(HttpStatus.NOT_FOUND,
+                "Resource conflict",
+                ex.getMessage());
+    }
+
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ErrorResponse> handlerDataAccessException(DataAccessException ex) {
         return  ErrorResponse.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Data exeption",ex.getMessage());
