@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +26,12 @@ public class Article {
 
     @Column(name = "status")
     private  String status;
+
+    @OneToMany(mappedBy = "article")
+    private List<Loan> articleList;
+
+
+
 
 
     public Article(String ref, String name, Integer quantity, String status ) {

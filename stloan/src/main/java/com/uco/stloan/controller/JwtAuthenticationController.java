@@ -5,6 +5,7 @@ import com.uco.stloan.Services.jwt.JwtUserDetailsService;
 import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.ResourceBadRequest;
 import com.uco.stloan.exception.ResourceNotFound;
+import com.uco.stloan.exception.Unauthorized;
 import com.uco.stloan.jwt.JwtTokenUtil;
 import com.uco.stloan.model.JwtRequest;
 import com.uco.stloan.model.JwtResponse;
@@ -44,14 +45,14 @@ public class JwtAuthenticationController {
 	@Autowired
 	private PersonService personService;
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<Response> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest, BindingResult result)
-			throws Exception {
-		try{
-			authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword(), result);
-		}catch (Exception e){
 
-			return Response.createResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
+	@PostMapping("/authenticate")
+	public ResponseEntity<Response> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest, BindingResult result) throws Exception{
+		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword(), result);
+
+		if(result.hasErrors()){
+				throw new Unauthorized("UNAUTHORIZE USER", result);
+
 		}
 
 		final UserDetails userDetails = userDetailsService
@@ -59,12 +60,16 @@ public class JwtAuthenticationController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
+
 		return Response.createResponse(HttpStatus.OK, new JwtResponse(token));
+
+
 	}
 
 	@PostMapping("/register")
 	public ResponseEntity<Response> saveUser(@RequestBody PersonDTO person)  {
 
+		//aqui falta validar que el correo no se repita
 		Person newPerson = new Person(person.getIdentification(), person.getName(), person.getLastname(),
 				person.getEmail(), person.getPassword(), person.getMobile(), person.getAddress(), person.getRol(),
 				person.getRFID());
@@ -81,7 +86,7 @@ public class JwtAuthenticationController {
 		} catch (DisabledException e) {
 			throw new ResourceNotFound("USER_DISABLED");
 		} catch (BadCredentialsException e) {
-			throw new ResourceBadRequest("INVALID_CREDENTIALS", result);
+			throw new Unauthorized("INVALID_CREDENTIALS", result);
 		}
 	}
 }
