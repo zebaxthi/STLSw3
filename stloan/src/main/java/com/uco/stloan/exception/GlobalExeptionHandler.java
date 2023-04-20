@@ -6,6 +6,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -48,9 +50,29 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
                 ex.getMessage());
     }
 
+    @ExceptionHandler(Unauthorized.class)
+    public ResponseEntity<ErrorResponse> handlerStudentConflict(Unauthorized ex) {
+        return ErrorResponse.createErrorResponse(HttpStatus.UNAUTHORIZED,
+                "unauthorized user",
+                ex.getMessage());
+    }
+
+
+
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ErrorResponse> handlerDataAccessException(DataAccessException ex) {
         return  ErrorResponse.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Data exeption",ex.getMessage());
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<ErrorResponse> handlerDataAccessException(DisabledException ex) {
+        return  ErrorResponse.createErrorResponse(HttpStatus.NOT_FOUND,"USER_DISABLED",ex.getMessage());
+    }
+
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handlerDataAccessException(BadCredentialsException ex) {
+        return  ErrorResponse.createErrorResponse(HttpStatus.BAD_REQUEST,"INVALID_CREDENTIALS",ex.getMessage());
     }
 
     @Override
@@ -68,6 +90,8 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
                 "Method not supported", ex.getMessage());
         return ResponseEntityBuilder.build(err);
     }
+
+
 
 
 
