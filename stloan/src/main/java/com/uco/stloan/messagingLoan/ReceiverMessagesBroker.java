@@ -16,7 +16,7 @@ public class ReceiverMessagesBroker {
     }
 
 
-    @RabbitListener ( queues = "${client.queue-recibir.cliente.queue-name}")
+    @RabbitListener ( queues = "${Loan.recibir.queue-name}")
     public void receiveMessageProcessClient(String message) {
         try {
             System.out.println(obtenerObjetoDeMensaje(message).get());

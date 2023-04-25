@@ -34,7 +34,7 @@ public class Person {
     @Column(name = "address")
     private String address;
     @Column(name = "rol")
-    private Rol rol;
+    private String rol;
     @Column(name = "RFID")
     private String RFID;
 
@@ -48,7 +48,7 @@ public class Person {
     public Person( ) {
     }
 
-    public Person( String identification, String name, String lastname, String email, String password, String mobile, String address, Rol rol, String RFID ) {
+    public Person( String identification, String name, String lastname, String email, String password, String mobile, String address, String rol, String RFID ) {
         this.identification = identification;
         this.name = name;
         this.lastname = lastname;

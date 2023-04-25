@@ -24,6 +24,7 @@ public class PersonImpl implements PersonService {
 
 
 
+
     @Override
     @Transactional(readOnly = true)
     public List<Person> findAll ( ) {
@@ -62,6 +63,7 @@ public class PersonImpl implements PersonService {
             throw new NotFoundEx("RESOURCE_NOT_FOUND");
         }
         Person person = optional.get();
+
 
         Map<String, Consumer<String>> setters = new HashMap<>();
         setters.put("identification", person::setIdentification);

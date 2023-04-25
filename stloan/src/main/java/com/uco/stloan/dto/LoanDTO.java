@@ -12,42 +12,39 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoanDTO {
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class LoanDTO {
 
-        @NotBlank
-        @NotNull
-        private Person personUser;
-        @NotBlank
-        @NotNull
-        private Person personMonitor;
+    @NotBlank
+    @NotNull
+    private Person personUser;
+    @NotBlank
+    @NotNull
+    private Person personMonitor;
 
-        @NotBlank
-        @NotNull
-        private Article article;
+    @NotBlank
+    @NotNull
+    private Article article;
 
-        @NotBlank
-        @NotNull
-        private int qtyArticle;
+    @NotBlank
+    @NotNull
+    private int qtyArticle;
 
-        @NotBlank
-        @DateTimeFormat
-        @NotNull
-        private Date dateStart;
+    @NotBlank
+    @DateTimeFormat
+    @NotNull
+    private Date dateStart;
 
-        @NotBlank
-        @DateTimeFormat
-        @NotNull
-        private Date dateEnd;
+    @NotBlank
+    @DateTimeFormat
+    @NotNull
+    private Date dateEnd;
 
-        @NotBlank
-        @NotNull
-        private Boolean isReturned;
+    @NotBlank
+    @NotNull
+    private Boolean isReturned;
 
-
-    }
 }

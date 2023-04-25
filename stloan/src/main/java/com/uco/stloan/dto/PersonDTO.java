@@ -1,5 +1,6 @@
 package com.uco.stloan.dto;
 
+import com.uco.stloan.model.Rol;
 import lombok.Getter;
 import lombok.Setter;
 
