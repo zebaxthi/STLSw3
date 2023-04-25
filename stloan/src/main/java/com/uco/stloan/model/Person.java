@@ -38,9 +38,6 @@ public class Person {
     @Column(name = "RFID")
     private String RFID;
 
-    @OneToMany(mappedBy = "person")
-    private List<Loan> loanList;
-
 
 
 

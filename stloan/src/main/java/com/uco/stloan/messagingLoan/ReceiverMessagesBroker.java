@@ -4,9 +4,11 @@ import com.uco.stloan.dto.LoanDTO;
 import com.uco.stloan.utils.gson.MapperJsonObjeto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Component
 public class ReceiverMessagesBroker {
 
     private final MapperJsonObjeto mapperJsonObjeto;
@@ -16,10 +18,10 @@ public class ReceiverMessagesBroker {
     }
 
 
-    @RabbitListener ( queues = "${Loan.recibir.queue-name}")
+    @RabbitListener ( queues = "${loan.procesar.queue-name}")
     public void receiveMessageProcessClient(String message) {
         try {
-            System.out.println(obtenerObjetoDeMensaje(message).get());
+            System.out.println(obtenerObjetoDeMensaje(message).get().getArticle());
         } catch (Exception e) {
             System.out.println(e);
         }

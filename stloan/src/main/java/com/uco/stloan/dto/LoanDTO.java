@@ -18,32 +18,32 @@ import java.util.Date;
 @NoArgsConstructor
 public class LoanDTO {
 
-    @NotBlank
+    //@NotBlank
     @NotNull
-    private Person personUser;
-    @NotBlank
+    private Integer personUser;
+    //@NotBlank
     @NotNull
-    private Person personMonitor;
+    private Integer personMonitor;
 
-    @NotBlank
+    //@NotBlank
     @NotNull
-    private Article article;
+    private Integer article;
 
-    @NotBlank
+    //@NotBlank
     @NotNull
     private int qtyArticle;
 
-    @NotBlank
+    //@NotBlank
     @DateTimeFormat
     @NotNull
-    private Date dateStart;
+    private String dateStart;
 
-    @NotBlank
+    //@NotBlank
     @DateTimeFormat
     @NotNull
-    private Date dateEnd;
+    private String dateEnd;
 
-    @NotBlank
+    //@NotBlank
     @NotNull
     private Boolean isReturned;
 

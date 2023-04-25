@@ -9,9 +9,12 @@ import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.core.MessagePropertiesBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Component
 public class MessageSenderBroker implements MessageSender<LoanDTO> {
 
     private final RabbitTemplate rabbitTemplate;
