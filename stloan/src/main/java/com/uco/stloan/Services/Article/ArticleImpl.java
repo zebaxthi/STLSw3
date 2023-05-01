@@ -1,4 +1,4 @@
-package com.uco.stloan.Services.Articucle;
+package com.uco.stloan.Services.Article;
 
 import com.uco.stloan.Repository.ArticleRepository;
 import com.uco.stloan.exception.NotFoundEx;
@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
-public class ArticleImpl implements ArticleServices {
+public class ArticleImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
     @Autowired

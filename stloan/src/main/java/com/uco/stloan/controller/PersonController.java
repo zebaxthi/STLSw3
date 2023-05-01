@@ -1,8 +1,7 @@
 package com.uco.stloan.controller;
 
-import com.uco.stloan.Services.Persona.PersonService;
+import com.uco.stloan.Services.Person.PersonService;
 import com.uco.stloan.dto.PatchDTO;
-import com.uco.stloan.dto.PersonDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.exception.ResourceBadRequest;
