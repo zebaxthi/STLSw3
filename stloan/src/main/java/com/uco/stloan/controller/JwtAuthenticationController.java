@@ -1,9 +1,8 @@
 package com.uco.stloan.controller;
 
-import com.uco.stloan.Services.Persona.PersonService;
+import com.uco.stloan.Services.Person.PersonService;
 import com.uco.stloan.Services.jwt.JwtUserDetailsService;
 import com.uco.stloan.dto.PersonDTO;
-import com.uco.stloan.exception.ResourceBadRequest;
 import com.uco.stloan.exception.ResourceNotFound;
 import com.uco.stloan.exception.Unauthorized;
 import com.uco.stloan.jwt.JwtTokenUtil;

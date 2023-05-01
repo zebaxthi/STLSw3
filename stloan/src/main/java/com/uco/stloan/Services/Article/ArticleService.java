@@ -1,11 +1,11 @@
-package com.uco.stloan.Services.Articucle;
+package com.uco.stloan.Services.Article;
 
 
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.model.Article;
 import java.util.List;
 
-public interface ArticleServices {
+public interface ArticleService {
 
     public List<Article> findAll();
     public Article findById(Long id);

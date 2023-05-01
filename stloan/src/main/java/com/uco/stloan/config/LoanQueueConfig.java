@@ -4,8 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
     @Configuration
-    @ConfigurationProperties(prefix = "Loan.procesar")
-    public class ClientQueueConfig {
+    @ConfigurationProperties(prefix = "loan.procesar")
+    public class LoanQueueConfig {
 
         private String exchangeName;
         private String routingKeyName;

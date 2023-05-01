@@ -2,7 +2,7 @@ package com.uco.stloan.controller;
 
 
 
-import com.uco.stloan.Services.Articucle.ArticleServices;
+import com.uco.stloan.Services.Article.ArticleService;
 
 import com.uco.stloan.dto.ArticleDTO;
 import com.uco.stloan.dto.PatchDTO;
@@ -25,7 +25,7 @@ import javax.validation.Valid;
 public class ArticleController {
 
     @Autowired
-    private ArticleServices articleService;
+    private ArticleService articleService;
 
     @GetMapping
     public ResponseEntity<Response> listArticles() {

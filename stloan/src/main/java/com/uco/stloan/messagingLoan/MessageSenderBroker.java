@@ -1,6 +1,6 @@
 package com.uco.stloan.messagingLoan;
 
-import com.uco.stloan.config.ClientQueueConfig;
+import com.uco.stloan.config.LoanQueueConfig;
 import com.uco.stloan.dto.LoanDTO;
 import com.uco.stloan.utils.MessageSender;
 import com.uco.stloan.utils.gson.MapperJsonObjeto;
@@ -9,19 +9,21 @@ import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.core.MessagePropertiesBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class MessageSenderBroker implements MessageSender<LoanDTO> {
 
     private final RabbitTemplate rabbitTemplate;
     private final MapperJsonObjeto mapperJsonObjeto;
-    private final ClientQueueConfig clientQueueConfig;
+    private final LoanQueueConfig loanQueueConfig;
 
-    public MessageSenderBroker ( RabbitTemplate rabbitTemplate, MapperJsonObjeto mapperJsonObjeto, ClientQueueConfig clientQueueConfig ) {
+    public MessageSenderBroker ( RabbitTemplate rabbitTemplate, MapperJsonObjeto mapperJsonObjeto, LoanQueueConfig loanQueueConfig) {
         this.rabbitTemplate = rabbitTemplate;
         this.mapperJsonObjeto = mapperJsonObjeto;
-        this.clientQueueConfig = clientQueueConfig;
+        this.loanQueueConfig = loanQueueConfig;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class MessageSenderBroker implements MessageSender<LoanDTO> {
         if (!cuerpoMensaje.isPresent()) {
             return;
         }
-        rabbitTemplate.convertAndSend(clientQueueConfig.getExchangeName(), clientQueueConfig.getRoutingKeyName(), cuerpoMensaje.get());
+        rabbitTemplate.convertAndSend(loanQueueConfig.getExchangeName(), loanQueueConfig.getRoutingKeyName(), cuerpoMensaje.get());
     }
 
     private MessageProperties generarPropiedadesMensaje(String idMessageSender ) {
