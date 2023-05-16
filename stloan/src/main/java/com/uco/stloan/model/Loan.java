@@ -41,6 +41,74 @@ public class Loan {
  @Column(name="IsReturned")
  private Boolean isReturned;
 
+ public Loan(Integer personUser, int personMonitor, int article, int qtyArticle, Date dateStart, Date dateEnd, Boolean isReturned) {
+  this.personUser = personUser;
+  this.personMonitor = personMonitor;
+  this.article = article;
+  this.qtyArticle = qtyArticle;
+  this.dateStart = dateStart;
+  this.dateEnd = dateEnd;
+  this.isReturned = isReturned;
+ }
+ public Loan()
+ {
 
+ }
+
+ public Integer getArticle() {
+  return article;
+ }
+
+ public void setArticle(Integer article) {
+  this.article = article;
+ }
+
+ public Integer getQtyArticle() {
+  return qtyArticle;
+ }
+
+ public void setQtyArticle(Integer qtyArticle) {
+  this.qtyArticle = qtyArticle;
+ }
+
+ public Integer getPersonUser() {
+  return personUser;
+ }
+
+ public void setPersonUser(Integer personUser) {
+  this.personUser = personUser;
+ }
+
+ public Integer getPersonMonitor() {
+  return personMonitor;
+ }
+
+ public void setPersonMonitor(Integer personMonitor) {
+  this.personMonitor = personMonitor;
+ }
+
+ public Date getDateStart() {
+  return dateStart;
+ }
+
+ public void setDateStart(Date dateStart) {
+  this.dateStart = dateStart;
+ }
+
+ public Date getDateEnd() {
+  return dateEnd;
+ }
+
+ public void setDateEnd(Date dateEnd) {
+  this.dateEnd = dateEnd;
+ }
+
+ public Boolean getReturned() {
+  return isReturned;
+ }
+
+ public void setReturned(Boolean returned) {
+  isReturned = returned;
+ }
 
 }
