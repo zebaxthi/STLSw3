@@ -6,6 +6,7 @@ import com.uco.stloan.dto.PatchDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.exception.ResourceBadRequest;
+import com.uco.stloan.messagingLoan.MessageSenderBroker;
 import com.uco.stloan.model.Loan;
 import com.uco.stloan.web.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,18 @@ public class LoanController {
 
     @Autowired
     private LoanService loanService;
+
+    @Autowired
+    MessageSenderBroker messageSenderBroker;
+
+    @PostMapping
+    public ResponseEntity<Response> create(@Valid @RequestBody LoanDTO loan, BindingResult result) {
+        if(result.hasErrors()){
+            throw new ResourceBadRequest("Loan bad request",result);
+        }
+        messageSenderBroker.execute(loan, "sre");
+        return Response.createResponse(HttpStatus.CREATED, HttpStatus.CREATED.toString());
+    }
 
     @GetMapping
     public ResponseEntity<Response> listLoans() {
@@ -41,18 +54,6 @@ public class LoanController {
     @GetMapping("/{personUser}/{articleID}")
     public ResponseEntity<Response> LoansUser(@PathVariable int personUser,@PathVariable int articleID) {
         return Response.createResponse(HttpStatus.OK,loanService.finLoanStatus(personUser,articleID));
-    }
-
-
-    @PostMapping
-    public ResponseEntity<Response> create(@Valid @RequestBody LoanDTO loan, BindingResult result) {
-        if (result.hasErrors()) {
-            throw new ResourceBadRequest("Article bad request", result);
-        }
-
-        Loan newLoan = new Loan(loan.getPersonUser(), loan.getPersonMonitor(), loan.getArticle(),
-                loan.getQtyArticle(), loan.getDateStart(), loan.getDateEnd(), loan.getIsReturned());
-        return Response.createResponse(HttpStatus.CREATED, loanService.save(newLoan));
     }
 
     @DeleteMapping
