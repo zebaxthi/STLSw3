@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
     @Configuration
     @ConfigurationProperties(prefix = "loan.procesar")
-    public class ClientQueueConfig {
+    public class LoanQueueConfig {
 
         private String exchangeName;
         private String routingKeyName;

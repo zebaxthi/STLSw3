@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
 
 @Getter
@@ -19,19 +20,22 @@ import java.util.Date;
 @NoArgsConstructor
 public class LoanDTO {
 
+    @NotNull
+    @PositiveOrZero
+    private int personUser;
     //@NotBlank
     @NotNull
-    private Integer personUser;
-    //@NotBlank
-    @NotNull
-    private Integer personMonitor;
+    @PositiveOrZero
+    private int personMonitor;
 
     //@NotBlank
     @NotNull
-    private Integer article;
+    @PositiveOrZero
+    private int article;
 
     //@NotBlank
     @NotNull
+    @PositiveOrZero
     private int qtyArticle;
 
     //@NotBlank

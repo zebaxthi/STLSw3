@@ -1,4 +1,4 @@
-package com.uco.stloan.Services.Persona;
+package com.uco.stloan.Services.Person;
 
 
 import com.uco.stloan.exception.NotFoundEx;
