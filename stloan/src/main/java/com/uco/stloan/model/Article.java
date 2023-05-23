@@ -27,6 +27,9 @@ public class Article {
     @Column(name = "status")
     private  String status;
 
+    @OneToMany(mappedBy = "article")
+    private List<Loan> articleListLoan;
+
 
 
 

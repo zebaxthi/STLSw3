@@ -1,6 +1,6 @@
 package com.uco.stloan.dto;
 
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.Setter;
 
