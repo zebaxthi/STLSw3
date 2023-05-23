@@ -17,4 +17,7 @@ public interface LoanService {
     public void deleteById(Long id);
 
     public boolean partialUpdate( long id, String key, String value) throws NotFoundEx;
+
+
+
 }

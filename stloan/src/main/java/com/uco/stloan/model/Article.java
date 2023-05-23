@@ -28,7 +28,7 @@ public class Article {
     private  String status;
 
     @OneToMany(mappedBy = "article")
-    private List<Loan> articleList;
+    private List<Loan> articleListLoan;
 
 
 

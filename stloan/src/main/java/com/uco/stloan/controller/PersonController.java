@@ -26,8 +26,10 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-
-
+    @GetMapping
+    public ResponseEntity<Response> ListOfPeople(){
+        return Response.createResponse(HttpStatus.OK, personService.findAll());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> personById ( @PathVariable Long id ) {
@@ -40,7 +42,6 @@ public class PersonController {
     }
 
     @PutMapping
-
     public ResponseEntity<Response> edit ( @Valid @RequestBody Person person,
                                            BindingResult result,
                                            @RequestParam(required = true) Long id ) {

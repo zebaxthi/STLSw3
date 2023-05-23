@@ -29,7 +29,7 @@ public class LoanController {
     }
 
     @GetMapping("/listPersonArticle/{id}")
-    public ResponseEntity<Response>listPersonArticle(@PathVariable int id)
+    public ResponseEntity<Response>getLoansByPerson(@PathVariable int id)
     {
         return Response.createResponse(HttpStatus.OK,loanService.listItemsLentByPerson(id));
     }

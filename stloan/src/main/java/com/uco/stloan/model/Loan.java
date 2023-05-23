@@ -1,11 +1,13 @@
 package com.uco.stloan.model;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name="LOAN")
 public class Loan {
 
