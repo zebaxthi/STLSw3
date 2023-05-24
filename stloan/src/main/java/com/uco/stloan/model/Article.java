@@ -27,12 +27,6 @@ public class Article {
     @Column(name = "status")
     private  String status;
 
-    @OneToMany(mappedBy = "article")
-    private List<Loan> articleListLoan;
-
-
-
-
 
     public Article(String ref, String name, Integer quantity, String status ) {
         this.ref = ref;
