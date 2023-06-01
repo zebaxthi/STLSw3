@@ -59,6 +59,7 @@ public class ArticleImpl implements ArticleService {
         setters.put("ref", article::setRef);
         setters.put("name", article::setName);
         setters.put("quantity", s -> article.setQuantity(Integer.parseInt(s)));
+        setters.put("status", article::setStatus);
 
         if (!setters.containsKey(key)) {
             throw new NotFoundEx("FIELD_NOT_FOUND");

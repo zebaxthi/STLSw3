@@ -15,6 +15,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -51,8 +58,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
+
 		// We don't need CSRF for this example
-		httpSecurity.csrf().disable()
+		httpSecurity
+				.csrf().disable().cors().and()
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers("/authenticate","/register").permitAll().
 				// all other requests need to be authenticated
