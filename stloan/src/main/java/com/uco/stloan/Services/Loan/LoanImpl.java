@@ -81,7 +81,7 @@ public class LoanImpl implements LoanService{
 
     @Override
     public void deleteById(Long id) {
-        loanRepository.findById(id);
+        loanRepository.deleteById(id);
     }
 
     @Override
@@ -98,8 +98,8 @@ public class LoanImpl implements LoanService{
         setters.put("personMonitor", val -> loan.setPersonMonitor(Integer.parseInt(val)));
         setters.put("article", val -> loan.setArticle(Integer.parseInt(val)));
         setters.put("qtyArticle", val -> loan.setQtyArticle(Integer.parseInt(val)));
-        setters.put("dateStart", val -> loan.setDateStart(Date.valueOf(val)));
-        setters.put("dateEnd", val -> loan.setDateEnd(Date.valueOf(val)));
+        setters.put("dateStart", loan::setDateStart);
+            setters.put("dateEnd", loan::setDateEnd);
         setters.put("isReturned", val -> loan.setReturned(Boolean.valueOf(val)));
 
         if (!setters.containsKey(key)) {

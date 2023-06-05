@@ -1,5 +1,6 @@
 package com.uco.stloan.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.uco.stloan.model.Article;
 import com.uco.stloan.model.Loan;
 import com.uco.stloan.model.Person;
@@ -39,14 +40,14 @@ public class LoanDTO {
     private int qtyArticle;
 
     //@NotBlank
-    @DateTimeFormat
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     @NotNull
-    private Date dateStart;
+    private String dateStart;
 
     //@NotBlank
-    @DateTimeFormat
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     @NotNull
-    private Date dateEnd;
+    private String dateEnd;
 
     //@NotBlank
     @NotNull
