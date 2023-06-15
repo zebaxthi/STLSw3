@@ -10,4 +10,7 @@ public interface LoanRepository extends JpaRepository<Loan,Long> {
     @Query(value = "SELECT * FROM LOAN WHERE REF=?",nativeQuery = true )
     public Loan findLoanAticlesByUser(String identification);
 
+    @Query(value = "SELECT * FROM LOAN WHERE article_id=?", nativeQuery=true)
+    public Loan findLoanByArticle(Long idArticle);
+
 }

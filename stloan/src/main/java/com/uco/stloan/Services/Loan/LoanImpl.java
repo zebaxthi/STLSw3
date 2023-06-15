@@ -37,6 +37,10 @@ public class LoanImpl implements LoanService{
                 .orElseThrow(() -> new ResourceNotFound("Loan with id:" + id + " not found"));
     }
 
+    @Override
+    public Loan findLoanByArticle(Long id) {
+        return loanRepository.findLoanByArticle(id);
+    }
 
 
     @Override

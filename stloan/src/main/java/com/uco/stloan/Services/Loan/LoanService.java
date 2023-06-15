@@ -9,9 +9,12 @@ import java.util.List;
 public interface LoanService {
     public List<Loan> findAll();
     public Loan findById(Long id);
+
+    public Loan findLoanByArticle(Long id);
+
     public List<Loan> finLoanStatus(int personUser,int articleID);
     public List<Loan>listItemsLentByPerson(int personUser);
-    //List<Loan>listArticlesborrowed(int personUser);
+
     public Loan save(Loan loan);
 
     public void deleteById(Long id);

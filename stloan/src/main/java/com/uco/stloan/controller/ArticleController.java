@@ -4,12 +4,15 @@ package com.uco.stloan.controller;
 
 import com.uco.stloan.Services.Article.ArticleService;
 
+import com.uco.stloan.Services.Loan.LoanService;
 import com.uco.stloan.dto.ArticleDTO;
 import com.uco.stloan.dto.PatchDTO;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.exception.ResourceBadRequest;
 import com.uco.stloan.model.Article;
+import com.uco.stloan.model.Loan;
+import com.uco.stloan.web.ErrorResponse;
 import com.uco.stloan.web.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private LoanService loanService;
 
     @GetMapping
     public ResponseEntity<Response> listArticles() {
@@ -49,8 +55,13 @@ public class ArticleController {
     }
 
     @DeleteMapping
-    public void delete ( @RequestParam(required = true) Long id ){
-        articleService.deleteById (id);
+    public ResponseEntity<?> delete ( @RequestParam(required = true) Long id){
+        Loan loan = loanService.findLoanByArticle(id);
+        if(loan != null){
+            return ErrorResponse.createErrorResponse(HttpStatus.BAD_REQUEST, "The item cannot be deleted because it has a loan associated with it", new Object());
+        }
+        articleService.deleteById(id);
+        return Response.createResponse(HttpStatus.OK);
     }
 
     @PutMapping

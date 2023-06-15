@@ -25,4 +25,12 @@ public class Response {
 
         return new ResponseEntity<Response>(response, status);
     }
+
+    public static ResponseEntity<Response> createResponse(HttpStatus status) {
+        Response response = new Response(LocalDateTime.now(),
+                status,
+                null);
+
+        return new ResponseEntity<Response>(response, status);
+    }
 }
